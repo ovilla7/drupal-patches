@@ -12,12 +12,6 @@ services:
     tags:
     - { name: drush.command }
 
-  migrate_file_to_media.media_migration_generator:
-    class: Drupal\migrate_file_to_media\Generators\MediaMigrateGenerator
-    arguments: ['@entity_type.manager']
-    tags:
-    - { name: drush.generator }
-
   migrate_file_to_media.media_migration_generator11:
     class: Drupal\migrate_file_to_media\Generators\MediaMigrateGenerator11
     arguments: ['@entity_type.manager']
