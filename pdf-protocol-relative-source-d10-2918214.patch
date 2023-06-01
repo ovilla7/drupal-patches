@@ -1,0 +1,42 @@
+diff --git a/src/Plugin/Field/FieldFormatter/PdfDefault.php b/src/Plugin/Field/FieldFormatter/PdfDefault.php
+index 6d1f851..e1167eb 100755
+--- a/src/Plugin/Field/FieldFormatter/PdfDefault.php
++++ b/src/Plugin/Field/FieldFormatter/PdfDefault.php
+@@ -166,7 +166,8 @@ class PdfDefault extends FormatterBase {
+     $query = UrlHelper::buildQuery($extra_options);
+     foreach ($items as $delta => $item) {
+       if ($item->entity->getMimeType() == 'application/pdf') {
+-        $file_url = \Drupal::service('file_url_generator')->generateAbsoluteString($item->entity->getFileUri());
++        $protocols = ['http:', 'https:'];
++        $file_url = str_replace($protocols, '', \Drupal::service('file_url_generator')->generateAbsoluteString($item->entity->getFileUri()));
+         $iframe_src = \Drupal::service('file_url_generator')->generateAbsoluteString($viewer_path) . '?file=' . rawurlencode($file_url);
+         $iframe_src = !empty($query) && $keep_pdfjs ? $iframe_src . '#' . $query : $iframe_src;
+         $html = [
+diff --git a/src/Plugin/Field/FieldFormatter/PdfPages.php b/src/Plugin/Field/FieldFormatter/PdfPages.php
+index 008f051..f2deb21 100755
+--- a/src/Plugin/Field/FieldFormatter/PdfPages.php
++++ b/src/Plugin/Field/FieldFormatter/PdfPages.php
+@@ -50,7 +50,8 @@ class PdfPages extends FormatterBase {
+     foreach ($items as $delta => $item) {
+       if ($item->entity->getMimeType() == 'application/pdf') {
+         $scale = $this->getSetting('scale');
+-        $file_url = \Drupal::service('file_url_generator')->generateAbsoluteString($item->entity->getFileUri());
++        $protocols = ['http:', 'https:'];
++        $file_url = str_replace($protocols, '', \Drupal::service('file_url_generator')->generateAbsoluteString($item->entity->getFileUri()));
+         $html = [
+           '#type' => 'html_tag',
+           '#tag' => 'div',
+diff --git a/src/Plugin/Field/FieldFormatter/PdfThumbnail.php b/src/Plugin/Field/FieldFormatter/PdfThumbnail.php
+index 92bdbd3..d8bc5f3 100755
+--- a/src/Plugin/Field/FieldFormatter/PdfThumbnail.php
++++ b/src/Plugin/Field/FieldFormatter/PdfThumbnail.php
+@@ -69,7 +69,8 @@ class PdfThumbnail extends FormatterBase {
+     $elements = [];
+     foreach ($items as $delta => $item) {
+       if ($item->entity->getMimeType() == 'application/pdf') {
+-        $file_url = \Drupal::service('file_url_generator')->generateAbsoluteString($item->entity->getFileUri());
++        $protocols = ['http:', 'https:'];
++        $file_url = str_replace($protocols, '', \Drupal::service('file_url_generator')->generateAbsoluteString($item->entity->getFileUri()));
+         $html = [
+           '#type' => 'html_tag',
+           '#tag' => 'canvas',
